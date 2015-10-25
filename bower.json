@@ -1,0 +1,21 @@
+{
+  "name": "media-fragment-uris-2.0",
+  "description": "Implements some ideas for an extended version of media fragments",
+  "main": "src/media-fragments-uris.2.0.js",
+  "moduleType": [],
+  "authors": [
+    "th.kurz@gmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "http://mico-project.eu",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "urijs": "uri.js#~1.16.1"
+  }
+}
