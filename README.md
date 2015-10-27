@@ -18,12 +18,12 @@ Inspired by SVG Basic Shapes I recommend to allow the following shapes in additi
 * `polygon=x1,y1(,x2,y2)*`
 
 ```
-http://example.org/image.png?circle=100,100,50
+http://example.org/image.png#circle=100,100,50
 ```
 Like for *xywh* also pixel and percent prefixes are allowed:
 
 ```
-http://example.org/image.png?ellipse=percent:50,50,10,20
+http://example.org/image.png#ellipse=percent:50,50,10,20
 ```
 IMHO there is no necessity for 'open shapes' so I skipped *line* and *polyline*. I would 
 favor this extensions to a single *shape* (as proposed by Olivier A.) extension because 
@@ -43,7 +43,7 @@ following transformation:
 Also for transformation pixel and percent prefixes are supported:
 
 ```
-http://example.org/image.png?rect=100,100,50,50&rotate=45
+http://example.org/image.png#rect=100,100,50,50&rotate=45
 ```
 Transformation are only evaluated if one and just one shape exists.
 
@@ -57,7 +57,7 @@ Some kind of a mixture from Toms S. idea and SVG. To keep urls shorter we just u
 * `aTranslate=d,ax1(,ay1)(;d,ax2(,ay2))*`
 
 ```
-http://example.org/video.mp4?circle=100,100,50&aScale=0.9,50;0.1,0&t=10,20
+http://example.org/video.mp4#circle=100,100,50&aScale=0.9,50;0.1,0&t=10,20
 ```
 *d* is defined as duration as may be defined in percent (default) or seconds (number followed by *s*). That allows
 to define animations also for images. The percentage refers to a time fragment od a video or (if absent) the whole video.
