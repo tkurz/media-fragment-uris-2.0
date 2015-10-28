@@ -53,11 +53,11 @@ Some kind of a mixture from Toms S. idea and SVG. To keep urls shorter we just u
 
 * `aTranslate=d1,tx1(,ty1)(;d2,tx2(,ty2))*`
 * `aScale=d1,sx1(,sy1)?(;d2,sx2(,sy2)?)*`
-* `aTranslate=d1,a1,(,cx1,cy1)?(;d2,a2,(,cx2,cy2)?)*`
-* `aTranslate=d,ax1(,ay1)(;d,ax2(,ay2))*`
+* `aRotate=d1,a1,(,cx1,cy1)?(;d2,a2,(,cx2,cy2)?)*`
+* `aSkew=d,ax1(,ay1)(;d,ax2(,ay2))*`
 
 ```
 http://example.org/video.mp4#circle=100,100,50&aScale=0.9,50;0.1,0&t=10,20
 ```
-*d* is defined as duration as may be defined in percent (default) or seconds (number followed by *s*). That allows
+*d* is defined as duration as may be defined in percent (for videos) or milliseconds (for images). That allows
 to define animations also for images. The percentage refers to a time fragment od a video or (if absent) the whole video.
