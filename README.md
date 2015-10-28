@@ -4,7 +4,7 @@ This are my thoughts an some basic implementations of how media fragment URIs co
 extended in the future. The extensions are inspired by discussions at the WWW conference
 2015 and the work from Tom Steiner and Olivier Aubert.
 
-[Find a demo here!](http://tkurz.github.io/media-fragment-uris-2.0)
+[Find a demo here!](http://tkurz.github.io/media-fragment-uris-ideas)
 
 
 Additional shapes
