@@ -2,5 +2,5 @@ bower_components
 .idea
 !bower_components/jquery/dist/jquery.min.js
 !bower_components/Snap.svg/dist/snap.svg-min.js
-!bower_components/sprintf/dist/angular-sprintf.min.js
+!bower_components/sprintf/dist/sprintf.min.js
 !bower_components/underscore/underscore-min.js
