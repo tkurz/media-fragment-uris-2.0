@@ -2,11 +2,10 @@ Media Fragments URIs 2.0
 ========================
 This are my thoughts an some basic implementations of how media fragment URIs could be 
 extended in the future. The extensions are inspired by discussions at the WWW conference
-2015, preparation work from Tom Steiner and Olivier Aubert.
+2015 and the work from Tom Steiner and Olivier Aubert.
 
-Why
----
-TODO but: it is necessary
+[Find a demo here!](http://tkurz.github.io/media-fragment-uris-2.0)
+
 
 Additional shapes
 -----------------
@@ -40,12 +39,10 @@ following transformation:
 * `rotate=a,(,cx,cy)?`
 * `skew=ax(,ay)?`
 
-Also for transformation pixel and percent prefixes are supported:
-
 ```
 http://example.org/image.png#rect=100,100,50,50&rotate=45
 ```
-Transformation are only evaluated if one and just one shape exists.
+Transformation are only evaluated if one and just one shape exists. For transformation pixel and percent prefixes are supported, too.
 
 Animate Transformation
 ----------------------
@@ -60,4 +57,4 @@ Some kind of a mixture from Toms S. idea and SVG. To keep urls shorter we just u
 http://example.org/video.mp4#circle=100,100,50&aScale=0.9,50;0.1,0&t=10,20
 ```
 *d* is defined as duration as may be defined in percent (for videos) or milliseconds (for images). That allows
-to define animations also for images. The percentage refers to a time fragment od a video or (if absent) the whole video.
+to define animations also for images. The percentage refers to a time fragment of a video or (if absent) the whole video.

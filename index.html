@@ -10,26 +10,62 @@
     <script type="text/javascript" src="src/media-fragments-uris.2.0.js"></script>
 </head>
 <body>
-
-<h1>Extending Media Fragments</h1>
-<h2>Add additional Shapes</h2>
-<img src="images/BigBuckBunny.jpg#circle=175,55,40">
-<br><code>BigBuckBunny.jpg#circle=175,55,40</code><br>
-<img src="images/BigBuckBunny.jpg#ellipse=percent:50,50,15,22">
-<br><code>BigBuckBunny.jpg#ellipse=percent:50,52,15,22</code><br>
-<h2>Add transformations</h2>
-<img src="images/BigBuckBunny.jpg#rect=230,100,80,55&rotate=25">
-<br><code>BigBuckBunny.jpg#rect=230,100,80,55&rotate=25</code><br>
-<h3>Add animated transformations</h3>
-<h2>To images ...</h2>
-<p>Click to start animation!</p>
-<img src="images/BigBuckBunny.jpg#rect=140,30,65,55&aTranslate=500,-90,90">
-<br><code>BigBuckBunny.jpg#rect=140,30,65,55&aTranslate=500,-90,90</code><br>
-<h3>... and to videos</h3>
-<p>Animation is aligned to the video and occurs from second 1 to 4!</p>
-<video width="640" height="360" controls="" id="video">
-    <source src="videos/big_buck_bunny.mp4#ellipse=330,100,50,80&aTranslate=0.45,0,0;0.1,-50,50&&aScale=0.45,1;0.1,0.7&t=0.5,4">
-</video>
-<br><code>big_buck_bunny.mp4#ellipse=330,100,50,80&aTranslate=0.45,0,0;0.1,-50,50&&aScale=0.45,1;0.1,0.7&t=0.5,4</code><br>
-</body>
-</html>
+<h1><a href="#media-fragments-uris-2-0" name="media-fragments-uris-2-0"></a>Media Fragments URIs 2.0</h1>
+<p>This are my thoughts an some basic implementations of how media fragment URIs could be<br/>extended in the future. The extensions are inspired by discussions at the WWW conference<br/>2015 and the work from Tom Steiner and Olivier Aubert.</p>
+<h2><a href="#additional-shapes" name="additional-shapes"></a>Additional shapes</h2>
+<p>Inspired by SVG Basic Shapes I recommend to allow the following shapes in addition to <em>xywh</em>:</p>
+<ul>
+    <li><code>rect=x,y,w,h(,rx,ry)?</code></li>
+    <li><code>circle=cx,cy,r</code></li>
+    <li><code>ellipse=cx,cy,rx,ry</code></li>
+    <li><code>polygon=x1,y1(,x2,y2)*</code></li>
+</ul>
+<pre><code>BigBuckBunny.jpg#circle=175,55,40
+</code></pre>
+<div class="example">
+    <img src="images/BigBuckBunny.jpg#circle=175,55,40">
+</div>
+<p>Like for <em>xywh</em> also pixel and percent prefixes are allowed:</p>
+<pre><code>BigBuckBunny.jpg#ellipse=percent:50,52,15,22
+</code></pre>
+<div class="example">
+    <img src="images/BigBuckBunny.jpg#ellipse=percent:50,50,15,22">
+</div>
+<p>IMHO there is no necessity for 'open shapes' so I skipped <em>line</em> and <em>polyline</em>. I would<br/>favor this extensions to a single <em>shape</em> (as proposed by Olivier A.) extension because<br/>it is simpler and such will most probably cause less confusion. The existing shape <code>xywh=x,y,w,h</code><br/>can be substituted to <code>rect=x,y,w,h</code>.</p>
+<h2><a href="#transformation" name="transformation"></a>Transformation</h2>
+<p>Like the basic shapes I got inspired by SVG here. To keep it simple we allow only the<br/>following transformation:</p>
+<ul>
+    <li><code>translate=tx(,ty)?</code></li>
+    <li><code>scale=sx(,sy)?</code></li>
+    <li><code>rotate=a,(,cx,cy)?</code></li>
+    <li><code>skew=ax(,ay)?</code></li>
+</ul>
+<pre><code>BigBuckBunny.jpg#rect=230,100,80,55&amp;rotate=25
+</code></pre>
+<div class="example">
+    <img src="images/BigBuckBunny.jpg#rect=230,100,80,55&rotate=25">
+</div>
+<p>Transformation are only evaluated if one and just one shape exists. For transformation pixel and percent prefixes are supported, too.</p>
+<h2><a href="#animate-transformation" name="animate-transformation"></a>Animate Transformation</h2>
+<p>Some kind of a mixture from Toms S. idea and SVG. To keep urls shorter we just use the prefix a + the transformation name:</p>
+<ul>
+    <li><code>aTranslate=d1,tx1(,ty1)(;d2,tx2(,ty2))*</code></li>
+    <li><code>aScale=d1,sx1(,sy1)?(;d2,sx2(,sy2)?)*</code></li>
+    <li><code>aRotate=d1,a1,(,cx1,cy1)?(;d2,a2,(,cx2,cy2)?)*</code></li>
+    <li><code>aSkew=d,ax1(,ay1)(;d,ax2(,ay2))*</code></li>
+</ul>
+<pre><code>BigBuckBunny.jpg#rect=140,30,65,55&amp;aTranslate=500,-90,90
+</code></pre>
+<div class="example">
+    <p>Click to start animation!</p>
+    <img src="images/BigBuckBunny.jpg#rect=140,30,65,55&aTranslate=500,-90,90">
+</div>
+<p><em>d</em> is defined as duration as may be defined in percent (for videos) or milliseconds (for images). That allows<br/>to define animations also for images. The percentage refers to a time fragment of a video or (if absent) the whole video.</p>
+<pre><code>big_buck_bunny.mp4#ellipse=330,100,50,80&aTranslate=0.45,0,0;0.1,-50,50&amp;aScale=0.45,1;0.1,0.7&amp;t=0.5,4
+</code></pre>
+<div class="example">
+    <p>Animation is aligned to the video and occurs from second 0.5 to 4!</p>
+    <video width="640" height="360" controls="" id="video">
+        <source src="videos/big_buck_bunny.mp4#ellipse=330,100,50,80&aTranslate=0.45,0,0;0.1,-50,50&aScale=0.45,1;0.1,0.7&t=0.5,4">
+    </video>
+</div>
