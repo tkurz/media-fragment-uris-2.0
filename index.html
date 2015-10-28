@@ -5,6 +5,7 @@
     <title>Media Fragments 2.0 Ideas</title>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="bower_components/sprintf/dist/sprintf.min.js"></script>
     <script type="text/javascript" src="bower_components/Snap.svg/dist/snap.svg-min.js"></script>
     <script type="text/javascript" src="src/media-fragments-uris.2.0.js"></script>
 </head>
@@ -13,10 +14,13 @@
 <h1>Extending Media Fragments</h1>
 <h2>Add additional Shapes</h2>
 <img src="images/BigBuckBunny.jpg#circle=175,55,40">
-<img src="images/BigBuckBunny.jpg#ellipse=percent:170,160,50,70">
-<!--
+<br><code>BigBuckBunny.jpg#circle=175,55,40</code><br>
+<img src="images/BigBuckBunny.jpg#ellipse=percent:50,50,15,22">
+<br><code>BigBuckBunny.jpg#ellipse=percent:50,52,15,22</code><br>
 <h2>Add transformations</h2>
-<img src="images/BigBuckBunny.jpg#rect=100,100,50,50&rotate=45">
+<img src="images/BigBuckBunny.jpg#rect=230,100,80,55&rotate=25">
+<br><code>BigBuckBunny.jpg#rect=230,100,80,55&rotate=25</code><br>
+<!--
 <h2>Add animated transformations</h2>
 <img src="images/BigBuckBunny.jpg#rect=100,100,50,50&aTranslate=2s,100">
 <video width="640" height="360" controls="" id="video">
