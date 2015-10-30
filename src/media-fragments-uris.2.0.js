@@ -22,7 +22,7 @@ var MediaFragments = {
 
         var transform = _.chain(properties)
             .keys()
-            .find(function(property){return _.contains(transforms, property)})
+            .filter(function(property){return _.contains(transforms, property)})
             .value();
 
         var shapeUnitIsPercent = properties[shape].indexOf('percent') == 0;
@@ -40,19 +40,26 @@ var MediaFragments = {
         }
 
         function transformProperties() {
-            if(!properties[transform]) return undefined;
+            var result = [];
 
-            //todo support picel and percent
-            var split = properties[transform].split(',');
+            _.each(transform,function(trans){
+                if(properties[trans]) {
+                    //todo support pixel and percent
+                    var split = properties[trans].split(',');
 
-            var transformProperties;
+                    var transformProperties;
 
-            switch(transform) {
-                case 'rotate': transformProperties = split.length == 1 ? _.object(['r'],split) : _.object(['r','cx','cy'],split);break;
-                case 'aTranslate': transformProperties = _.object(['d','x1','y1'],split);break; //TODO
-            }
+                    switch(trans) {
+                        case 'rotate': transformProperties = split.length == 1 ? _.object(['r'],split) : _.object(['r','cx','cy'],split);break;
+                        case 'aTranslate': transformProperties = _.object(['d1','x1','y1','d2','x2','y2'],split);break; //TODO
+                        case 'aScale': transformProperties = _.object(['d1','x1','d1','x1','y1'],split);break; //TODO
+                    }
 
-            return transformProperties ? {type:transform,properties:transformProperties} : undefined;
+                    if(transformProperties) result.push({type:trans,properties:transformProperties});
+                }
+            });
+            console.log(result);
+            return result;
         }
 
         var time = properties.t ? properties.t.split(',') : undefined;
@@ -95,7 +102,7 @@ var MediaFragments = {
                             fragment.spatialFragment.properties.ry = Math.floor(_height * fragment.spatialFragment.properties.ry / 100);
                             break;
                     }
-                    console.log(_width,_height,fragment.spatialFragment.properties)
+
                 }
 
                 switch(fragment.spatialFragment.type) {
@@ -104,16 +111,16 @@ var MediaFragments = {
                     case 'rect': fragmentObject = s.rect(fragment.spatialFragment.properties.x,fragment.spatialFragment.properties.y,fragment.spatialFragment.properties.w,fragment.spatialFragment.properties.h).attr(attributes); break;
                 }
 
-                if(fragmentObject && fragment.spatialFragment.transform) {
+                if(fragmentObject && fragment.spatialFragment.transform.length>0) {
 
-                    var transform = fragment.spatialFragment.transform;
+                    var transform = fragment.spatialFragment.transform[0];
 
                     switch(transform.type) {
                         case 'rotate': fragmentObject.transform(sprintf("r%s",transform.properties.r));break;
                         case 'aTranslate':
                             var onClickAnimate = function(){
                                 fragmentObject.transform('');   // reset the animation, may not be needed
-                                fragmentObject.animate({ transform: sprintf('t%s,%s',transform.properties.x1,transform.properties.y1) }, parseInt(transform.properties.d) ) ;
+                                fragmentObject.animate({ transform: sprintf('t%s,%s',transform.properties.x1,transform.properties.y1) }, parseInt(transform.properties.d1) ) ;
                             };
                             svg.click(onClickAnimate);
                             break;
@@ -177,8 +184,17 @@ var MediaFragments = {
 
             var duration = fragment.timeFragment.end - fragment.timeFragment.start;
 
-            var fragmentObject = s.ellipse(330,100,50,80).attr(attributes);
+            var fragmentObject;
+
+            switch(fragment.spatialFragment.type) {
+                case 'circle': fragmentObject = s.circle(fragment.spatialFragment.properties.x,fragment.spatialFragment.properties.y,fragment.spatialFragment.properties.r).attr(attributes); break;
+                case 'ellipse': fragmentObject = s.ellipse(fragment.spatialFragment.properties.cx,fragment.spatialFragment.properties.cy,fragment.spatialFragment.properties.rx,fragment.spatialFragment.properties.ry).attr(attributes); break;
+                case 'rect': fragmentObject = s.rect(fragment.spatialFragment.properties.x,fragment.spatialFragment.properties.y,fragment.spatialFragment.properties.w,fragment.spatialFragment.properties.h).attr(attributes); break;
+            }
+
             fragmentObject.attr('display','none');
+
+            //parse animation timeslots and add listeners TODO
 
             videoTimeUpdateWrapper.addListener(function(time){
                 if(fragment.timeFragment.start < time && time < fragment.timeFragment.end) {
@@ -189,7 +205,7 @@ var MediaFragments = {
                     }
                     if( startTime < time && time < endTime) {
                         var dur = endTime-startTime;
-                        var percent = (time-startTime)/dur;console.log(percent);console.log(1-(0.3*percent));
+                        var percent = (time-startTime)/dur;
                         fragmentObject.transform(sprintf("t%s,%ss%s",-50*percent,50*percent,1-(0.3*percent)));
                     }
 
